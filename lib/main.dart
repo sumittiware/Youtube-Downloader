@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Youtube Downloader',
       theme: ThemeData(
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -28,6 +28,40 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("YouTube-Downloader"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Steps to Follow : "),
+                          content: SizedBox(
+                            height: 200,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "1) Open youtube video, click on share option"),
+                                Text("2) Click on copy to clipboard"),
+                                Text(
+                                    "3) Paste the link on click \"Get Details\""),
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Okay"))
+                          ],
+                        );
+                      });
+                },
+                icon: Icon(Icons.info))
+          ],
         ),
         body: YouTubeDowloader());
   }

@@ -68,7 +68,7 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
               child: TextField(
                 controller: _controller,
                 decoration: InputDecoration(
-                  hintText: "https://youtu.be/FfrAcQjlrsg",
+                  hintText: "Paste link here",
                   prefixIcon: Icon(Icons.content_paste),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)),
@@ -184,8 +184,9 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                             setState(() {
                               _gettingVideo = false;
                             });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Video downloaded!!!")));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "Video downloaded and saved at /storage/emulated/0/YoutubeDownloader/Video/")));
                           },
                           child: (!_gettingVideo)
                               ? Text("Download Video")
@@ -211,30 +212,15 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                               });
                               print("Do nothing");
                             }
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("mp3 downloaded!!!")));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "mp3 downloaded and saved at /storage/emulated/0/YoutubeDownloader/Audio/")));
                           },
                           child: (!_gettingAudio)
                               ? Text("Download Audio")
                               : _progressIndicator()),
                     ),
                   ]),
-            if ((_gettingVideo || _gettingAudio) && !(_gotAudio || _gotVideo))
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Downloading " +
-                      ((_gettingAudio) ? "audio file...." : "video file....")),
-                  // CircularPercentIndicator(
-                  //   radius: 60,
-                  //   lineWidth: 5.0,
-                  //   percent: stats,
-                  //   center: new Text((stats.ceil() * 100).toString()),
-                  //   progressColor: Colors.red,
-                  // )
-                ],
-              ),
           ]),
     );
   }
