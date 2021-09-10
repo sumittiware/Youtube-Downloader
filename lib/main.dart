@@ -1,5 +1,8 @@
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:youTubeDownloader/colors.dart';
+import 'package:youTubeDownloader/homepage.dart';
+import 'package:youTubeDownloader/provider/songprovider.dart';
 import 'package:youTubeDownloader/youtubeDown.dart';
 
 void main() {
@@ -10,14 +13,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Youtube Downloader',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: SongProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Youtube Downloader',
+        darkTheme: ThemeData(
+          // scaffoldBackgroundColor: AppColors.black,
+          primaryColor: AppColors.orange,
+        ),
+        home: HomePage(),
       ),
-      home: MyHomePage(),
     );
   }
 }
@@ -27,7 +35,11 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("YouTube-Downloader"),
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(Icons.arrow_back_ios),
+          ),
+          title: Text("Download"),
           actions: [
             IconButton(
                 onPressed: () {
@@ -37,18 +49,8 @@ class MyHomePage extends StatelessWidget {
                         return AlertDialog(
                           title: Text("Steps to Follow : "),
                           content: SizedBox(
-                            height: 200,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    "1) Open youtube video, click on share option"),
-                                Text("2) Click on copy to clipboard"),
-                                Text(
-                                    "3) Paste the link on click \"Get Details\""),
-                              ],
-                            ),
+                            child: Text(
+                                "1) Open youtube video, click on share option\n2) Click on copy to clipboard\n3) Paste the link on click \"Get Details\""),
                           ),
                           actions: [
                             ElevatedButton(

@@ -41,10 +41,10 @@ Future<void> download(var audioStream, var output) async {
 
 Future<Directory> _getDownloadDirectory(bool isAudio) async {
   if (Platform.isAndroid) {
-    Directory directory = await getExternalStorageDirectory();
+    Directory? directory = await getExternalStorageDirectory();
     String newPath = "";
     print(directory);
-    List<String> paths = directory.path.split("/");
+    List<String> paths = directory!.path.split("/");
     for (int x = 1; x < paths.length; x++) {
       String folder = paths[x];
       if (folder != "Android") {
@@ -62,7 +62,7 @@ Future<Directory> _getDownloadDirectory(bool isAudio) async {
     }
     return dir;
   }
-  return null;
+  throw "Platform not supported";
 }
 
 Future<bool> _requestPermissions() async {
@@ -82,14 +82,14 @@ Future<List<dynamic>> getDetails(String url) async {
   var duration = video.duration;
   var thumbmnail = video.thumbnails.highResUrl;
   var uploadDate = video.publishDate;
-  print(title);
 
   return [
     title,
     author,
-    "${duration.inHours}:${duration.inMinutes.remainder(60)}:${(duration.inSeconds.remainder(60))}",
+    "${duration?.inHours}:${duration?.inMinutes.remainder(60)}:${(duration?.inSeconds.remainder(60))}",
     thumbmnail,
-    formatDate(uploadDate, [dd, '/', mm, '/', yyyy]).toString()
+    formatDate(uploadDate ?? DateTime.now(), [dd, '/', mm, '/', yyyy])
+        .toString()
   ];
 }
 

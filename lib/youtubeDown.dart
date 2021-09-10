@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:youTubeDownloader/colors.dart';
 import 'package:youTubeDownloader/downloadservice.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-import 'package:youtube_explode_dart/src/youtube_explode_base.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 class YouTubeDowloader extends StatefulWidget {
   @override
@@ -17,19 +16,17 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
   bool _detailserror = false;
   bool _gettingVideo = false;
   bool _gettingAudio = false;
-  bool _gotVideo = false;
-  bool _gotAudio = false;
 
-  String title;
-  String author;
-  String duration;
-  String thumbnailUrl;
-  String date;
-  String error;
+  String? title;
+  String? author;
+  String? duration;
+  String? thumbnailUrl;
+  String? date;
+  String? error;
 
   var youtubeInstance;
   var _controller = TextEditingController();
-  String filename = '';
+  String filename = "";
   double stats = 0.0;
   String url = '';
 
@@ -108,9 +105,7 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                         style: TextStyle(color: Colors.white),
                       )
                     : _progressIndicator(),
-                style: ElevatedButton.styleFrom(
-                  onPrimary: Colors.white,
-                ),
+                style: ElevatedButton.styleFrom(primary: AppColors.orange),
               ),
             ),
             if (_detailsFetched && !_detailsLoading)
@@ -120,7 +115,6 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                   elevation: 4,
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
-                    height: 300,
                     width: double.infinity,
                     padding: EdgeInsets.all(12),
                     child: Column(
@@ -133,13 +127,13 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(thumbnailUrl),
+                                image: NetworkImage(thumbnailUrl ?? ""),
                                 fit: BoxFit.cover),
                           ),
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: Text(
-                              duration,
+                              duration ?? "",
                               style: TextStyle(
                                   color: Colors.white,
                                   backgroundColor: Colors.black),
@@ -147,7 +141,7 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                           ),
                         ),
                         Text(
-                          title,
+                          title ?? "",
                           style: TextStyle(
                             fontSize: 16,
                           ),
@@ -155,7 +149,7 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [Text(author), Text(date)],
+                          children: [Text(author ?? ""), Text(date ?? "")],
                         )
                       ],
                     ),
@@ -170,6 +164,8 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: AppColors.orange),
                           onPressed: () async {
                             setState(() {
                               _gettingVideo = true;
@@ -195,6 +191,8 @@ class _YouTubeDowloaderState extends State<YouTubeDowloader> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: AppColors.orange),
                           onPressed: () async {
                             setState(() {
                               _gettingAudio = true;
