@@ -26,10 +26,10 @@ class _SongsListState extends State<SongsList> {
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Card(
-                    elevation: 4,
+                    elevation: 2,
                     margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(8)),
                     child: InkWell(
                       onTap: () {
                         songProvider.changeSong(index);

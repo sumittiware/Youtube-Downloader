@@ -53,7 +53,9 @@ class _MusicPlayerState extends State<MusicPlayer> {
       color: Colors.amber.shade200,
       elevation: 8,
       margin: EdgeInsets.all(0.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24), topRight: Radius.circular(24))),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(

@@ -65,7 +65,7 @@ Future<Directory> _getDownloadDirectory(bool isAudio) async {
   throw "Platform not supported";
 }
 
-Future<bool> _requestPermissions() async {
+Future<bool> requestPermissions() async {
   var status = await Permission.storage.status;
   if (!status.isGranted) {
     await Permission.storage.request();
@@ -98,7 +98,7 @@ Future<void> extract(url, {bool downloadaudio = false}) async {
   // Save the video to the download directory.
   // final FlutterFFmpegConfig _flutterFFmpegConfig = new FlutterFFmpegConfig();
   // var storageperm = Permission.storage;
-  var permissions = await _requestPermissions();
+  var permissions = await requestPermissions();
   var dir = await _getDownloadDirectory(downloadaudio);
   print(dir);
   if (permissions) {

@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -11,24 +9,14 @@ class SongProvider with ChangeNotifier {
   Duration? _songDuration = Duration();
   List<FileSystemEntity>? _files = [];
 
-  List<FileSystemEntity> get files {
-    return [..._files!];
-  }
+  List<FileSystemEntity> get files => [..._files!];
+  int get currentIndex => _currentIndex!;
+  bool get isPlaying => _isPlaying!;
+  Duration get songDuration => _songDuration!;
+  AudioPlayer get player => _player!;
 
-  int get currentIndex {
-    return _currentIndex!;
-  }
-
-  bool get isPlaying {
-    return _isPlaying!;
-  }
-
-  Duration get songDuration {
-    return _songDuration!;
-  }
-
-  AudioPlayer get player {
-    return _player!;
+  SongProvider() {
+    readSongsFile();
   }
 
   void readSongsFile() {
@@ -51,9 +39,10 @@ class SongProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeSong(int value) async {
+  Future<void> changeSong(int value) async {
     _songDuration = await _player!.setFilePath(_files![value].path);
     _currentIndex = value;
+    // _player!.play();
     notifyListeners();
   }
 
@@ -63,7 +52,8 @@ class SongProvider with ChangeNotifier {
 
   void shuffleList() {
     _files!.shuffle();
-    // _player!.dispose();
+    _player!.pause();
+    changeSong(currentIndex);
     notifyListeners();
   }
 
